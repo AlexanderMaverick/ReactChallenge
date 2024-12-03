@@ -37,10 +37,17 @@ const Cart = ({ cart, setCart }) => {
               key={item.id}
               className="list-group-item d-flex justify-content-between align-items-center"
             >
-              <div>
-                <h5>{item.name}</h5>
-                <p>Precio: ${item.price.toLocaleString('es-CL')}</p>
-                <p>Cantidad: {item.quantity}</p>
+              <div className="d-flex align-items-center">
+                <img
+                  src={item.img}
+                  alt={item.name}
+                  className='cart-item-img'
+                />
+                <div>
+                  <h5>{item.name}</h5>
+                  <p>Precio: ${item.price.toLocaleString('es-CL')}</p>
+                  <p>Cantidad: {item.quantity}</p>
+                </div>
               </div>
               <div>
                 <button
