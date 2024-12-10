@@ -1,12 +1,15 @@
 import { useState } from 'react';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
 import Home from './components/Home';
 import RegisterPage from './components/RegisterPage';
 import LoginPage from './components/LoginPage';
-import Cart from './components/Cart'; // Importar el carrito
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Cart from './components/Cart';
+
+import './App.css'; // solo endpoint de Pizza.jsx
+import 'bootstrap/dist/css/bootstrap.min.css'; // solo endpoint de Pizza.jsx
+import Pizza from './components/Pizza'; // solo endpoint de Pizza.jsx
+import Navbar from './components/Navbar'; // solo endpoint de Pizza.jsx
+import Footer from './components/Footer'; // solo endpoint de Pizza.jsx
+
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState('register'); 
@@ -36,6 +39,10 @@ const App = () => {
       return <Cart cart={cart} setCart={setCart} />; 
     }
 
+    if (currentPage === 'pizza') {
+      return <Pizza />;
+    }
+
     return <Home addToCart={addToCart} />; 
   };
 
@@ -53,5 +60,26 @@ const App = () => {
     </div>
   );
 };
+
+
+// solo endpoint de Pizza.jsx
+
+/*
+const App = () => {
+  return (
+    <div>
+      <Navbar
+        setCurrentPage={() => console.log('Set page')}
+        cartCount={0}
+        total={0}
+        isLoggedIn={false}
+        setIsLoggedIn={() => console.log('Set login state')}
+      />
+      <Pizza/>
+      <Footer/>
+    </div>
+  );
+};
+*/
 
 export default App;

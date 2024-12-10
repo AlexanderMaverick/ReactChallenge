@@ -33,11 +33,6 @@
   }
 }
 
-.card {
-  padding: 2em;
-  margin: 10px;
-}
-
 .read-the-docs {
   color: #888;
 }
@@ -50,6 +45,8 @@
 }
 
 .card {
+  padding: 2em;
+  margin: 10px;
   height: 100%;
   display: flex;
   flex-direction: column;
