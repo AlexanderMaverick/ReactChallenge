@@ -1,0 +1,31 @@
+.not-found-container {
+    text-align: center;
+    margin-top: 50px;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  .not-found-container h1 {
+    font-size: 3rem;
+    color: #e63946;
+  }
+  
+  .not-found-container p {
+    margin: 20px 0;
+    font-size: 1.2rem;
+  }
+  
+  .back-home-link {
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: #457b9d;
+    color: white;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .back-home-link:hover {
+    background-color: #1d3557;
+  }
+  

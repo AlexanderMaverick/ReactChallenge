@@ -1,85 +1,52 @@
-import { useState } from 'react';
-import Home from './components/Home';
-import RegisterPage from './components/RegisterPage';
-import LoginPage from './components/LoginPage';
-import Cart from './components/Cart';
+import Home from "./pages/Home";
+import Register from "./pages/RegisterPage";
+import Login from "./pages/LoginPage";
+import Cart from "./pages/Cart";
+import Pizza from "./pages/Pizza";
+import Profile from "./pages/Profile";
+import NotFound from "./pages/NotFound";
+import Navbar from "./components/Navbar";
+import './App.css'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Footer from './components/Footer';
+import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
 
-import './App.css'; // solo endpoint de Pizza.jsx
-import 'bootstrap/dist/css/bootstrap.min.css'; // solo endpoint de Pizza.jsx
-import Pizza from './components/Pizza'; // solo endpoint de Pizza.jsx
-import Navbar from './components/Navbar'; // solo endpoint de Pizza.jsx
-import Footer from './components/Footer'; // solo endpoint de Pizza.jsx
+function App() {
+  const [cart, setCart] = useState([]);
 
-
-const App = () => {
-  const [currentPage, setCurrentPage] = useState('register'); 
-  const [isLoggedIn, setIsLoggedIn] = useState(false); 
-  const [cart, setCart] = useState([]); 
-  const addToCart = (pizza) => {
+  const handleAddToCart = (pizza) => {
     setCart((prevCart) => {
-      const pizzaExists = prevCart.find((item) => item.id === pizza.id);
-      if (pizzaExists) {
+      const existingItem = prevCart.find((item) => item.id === pizza.id);
+      if (existingItem) {
         return prevCart.map((item) =>
-          item.id === pizza.id ? { ...item, quantity: item.quantity + 1 } : item
+          item.id === pizza.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
         );
+      } else {
+        return [...prevCart, { ...pizza, quantity: 1 }];
       }
-      return [...prevCart, { ...pizza, quantity: 1 }];
     });
   };
 
-  const renderPage = () => {
-    if (!isLoggedIn) {
-      if (currentPage === 'register') {
-        return <RegisterPage setCurrentPage={setCurrentPage} />;
-      }
-      return <LoginPage setCurrentPage={setCurrentPage} setIsLoggedIn={setIsLoggedIn} />;
-    }
-
-    if (currentPage === 'cart') {
-      return <Cart cart={cart} setCart={setCart} />; 
-    }
-
-    if (currentPage === 'pizza') {
-      return <Pizza />;
-    }
-
-    return <Home addToCart={addToCart} />; 
-  };
-
   return (
     <div>
-      <Navbar
-        setCurrentPage={setCurrentPage}
-        cartCount={cart.length}
-        total={cart.reduce((sum, item) => sum + item.price * item.quantity, 0)}
-        isLoggedIn={isLoggedIn}
-        setIsLoggedIn={setIsLoggedIn}
-      />
-      {renderPage()}
+      <Navbar />
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/" element={<Home onAddToCart={handleAddToCart} />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
+          <Route path="/pizza/p001" element={<Pizza onAddToCart={handleAddToCart} />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
       <Footer />
     </div>
   );
-};
-
-
-// solo endpoint de Pizza.jsx
-
-/*
-const App = () => {
-  return (
-    <div>
-      <Navbar
-        setCurrentPage={() => console.log('Set page')}
-        cartCount={0}
-        total={0}
-        isLoggedIn={false}
-        setIsLoggedIn={() => console.log('Set login state')}
-      />
-      <Pizza/>
-      <Footer/>
-    </div>
-  );
-};
-*/
+}
 
 export default App;

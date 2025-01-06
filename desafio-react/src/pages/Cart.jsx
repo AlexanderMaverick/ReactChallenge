@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types';
 
 const Cart = ({ cart, setCart }) => {
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const total = cart.reduce(
+    (sum, item) => sum + item.price * (item.quantity || 1),
+    0
+  );
 
   const removeFromCart = (id) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
@@ -10,7 +13,9 @@ const Cart = ({ cart, setCart }) => {
   const increaseQuantity = (id) => {
     setCart((prevCart) =>
       prevCart.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+        item.id === id
+          ? { ...item, quantity: (item.quantity || 1) + 1 }
+          : item
       )
     );
   };
@@ -41,12 +46,13 @@ const Cart = ({ cart, setCart }) => {
                 <img
                   src={item.img}
                   alt={item.name}
-                  className='cart-item-img'
+                  className="cart-item-img me-3"
+                  style={{ width: '50px', height: '50px', objectFit: 'cover' }}
                 />
                 <div>
                   <h5>{item.name}</h5>
                   <p>Precio: ${item.price.toLocaleString('es-CL')}</p>
-                  <p>Cantidad: {item.quantity}</p>
+                  <p>Cantidad: {item.quantity || 1}</p>
                 </div>
               </div>
               <div>

@@ -1,19 +1,12 @@
-import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
 
-const Navbar = ({ setCurrentPage, cartCount, total, isLoggedIn, setIsLoggedIn }) => {
+const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
-        <a
-          className="navbar-brand"
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            setCurrentPage('home');
-          }}
-        >
+        <Link className="navbar-brand" to="/">
           Pizzería Mamma Mía
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -25,76 +18,33 @@ const Navbar = ({ setCurrentPage, cartCount, total, isLoggedIn, setIsLoggedIn })
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <button
-                className="btn btn-outline-primary me-2"
-                onClick={() => setCurrentPage('home')}
-              >
+              <Link className="btn btn-outline-primary me-2" to="/">
                 🍕 Home
-              </button>
+              </Link>
             </li>
-            {isLoggedIn ? (
-              <>
-                <li className="nav-item">
-                  <button
-                    className="btn btn-outline-primary me-2"
-                    onClick={() => setCurrentPage('profile')}
-                  >
-                    🔓 Profile
-                  </button>
-                </li>
-                <li className="nav-item">
-                  <button
-                    className="btn btn-outline-danger"
-                    onClick={() => {
-                      setIsLoggedIn(false);
-                      setCurrentPage('login');
-                    }}
-                  >
-                    🔒 Logout
-                  </button>
-                </li>
-              </>
-            ) : (
-              <>
-                <li className="nav-item">
-                  <button
-                    className="btn btn-outline-primary me-2"
-                    onClick={() => setCurrentPage('login')}
-                  >
-                    🔐 Login
-                  </button>
-                </li>
-                <li className="nav-item">
-                  <button
-                    className="btn btn-outline-secondary"
-                    onClick={() => setCurrentPage('register')}
-                  >
-                    🔐 Register
-                  </button>
-                </li>
-              </>
-            )}
             <li className="nav-item">
-              <button
-                className="btn btn-outline-success"
-                onClick={() => setCurrentPage('cart')}
+              <Link className="btn btn-outline-primary me-2" to="/login">
+                🔐 Login
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                className="btn btn-outline-secondary"
+                to="/register"
               >
-                🛒 Carrito ({cartCount}) - Total: ${total.toLocaleString('es-CL')}
-              </button>
+                🔐 Register
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="btn btn-outline-success" to="/cart">
+                🛒 Carrito
+              </Link>
             </li>
           </ul>
         </div>
       </div>
     </nav>
   );
-};
-
-Navbar.propTypes = {
-  setCurrentPage: PropTypes.func.isRequired,
-  cartCount: PropTypes.number.isRequired,
-  total: PropTypes.number.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
-  setIsLoggedIn: PropTypes.func.isRequired,
 };
 
 export default Navbar;

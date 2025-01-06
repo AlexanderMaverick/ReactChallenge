@@ -1,16 +1,15 @@
-//import { pizzas } from '../data/pizzas';
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import CardPizza from './CardPizza';
-import Header from './Header';
+import CardPizza from '../components/CardPizza';
+import Header from '../components/Header';
 
-const Home = ({ addToCart }) => {
+const Home = ({ onAddToCart }) => {
   const [pizzas, setPizzas] = useState([]); 
   const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null); 
+  const [message, setMessage] = useState(""); 
 
   useEffect(() => {
-   
     const fetchPizzas = async () => {
       try {
         const response = await fetch('http://localhost:5000/api/pizzas');
@@ -29,6 +28,15 @@ const Home = ({ addToCart }) => {
     fetchPizzas();
   }, []); 
 
+  const handleAddToCart = (pizza) => {
+    onAddToCart(pizza);
+    setMessage(`Se agregó "${pizza.name}" al carrito.`);
+
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
+  };
+
   if (loading) {
     return <div>Loading pizzas...</div>;
   }
@@ -40,6 +48,8 @@ const Home = ({ addToCart }) => {
   return (
     <div>
       <Header />
+      {message && <div className="alert alert-success">{message}</div>}
+
       <div className="d-flex justify-content-around flex-wrap">
         {pizzas.map((pizza) => (
           <CardPizza
@@ -49,7 +59,7 @@ const Home = ({ addToCart }) => {
             ingredients={pizza.ingredients}
             img={pizza.img}
             desc={pizza.desc}
-            onAddToCart={() => addToCart(pizza)}
+            onAddToCart={() => handleAddToCart(pizza)} 
           />
         ))}
       </div>
@@ -58,7 +68,7 @@ const Home = ({ addToCart }) => {
 };
 
 Home.propTypes = {
-  addToCart: PropTypes.func.isRequired,
+  onAddToCart: PropTypes.func.isRequired,
 };
 
 export default Home;
